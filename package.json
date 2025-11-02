@@ -1,0 +1,25 @@
+{
+  "name": "chealte-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "test:game": "npx ts-node --project tsconfig.json -r tsconfig-paths/register src/structures/Game.ts",
+    "dev": "npx ts-node-dev src/server.ts",
+    "start": "npx ts-node src/server.ts"
+  },
+  "author": "smyler3",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.1.0",
+    "node-cron": "^4.2.1",
+    "ts-node": "^10.9.2",
+    "ts-node-dev": "^2.0.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.5",
+    "@types/node": "^24.9.1",
+    "typescript": "^5.9.3"
+  }
+}
