@@ -1,7 +1,7 @@
 // Dice
 export const NUMBER_OF_DICE: number = 16;
 
-export const REQUIRED_TOP_WORDS: number = 4;
+export const REQUIRED_TOP_WORDS: number = 5;
 
 // Clock
 export const SECONDS_IN_A_MINUTE: number = 60;

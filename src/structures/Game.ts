@@ -69,7 +69,7 @@ export class Game {
             }
         }
 
-        const fifthLargestScore = quickSelectByIndex(this.validWords, REQUIRED_TOP_WORDS);
+        const fifthLargestScore = quickSelectByIndex(this.validWords, REQUIRED_TOP_WORDS - 1);
         const highestScoringWords = this.validWords.filter((word) => word.value >= fifthLargestScore);
         const sortedHighestScoringWords = highestScoringWords.sort((a, b) => b.value - a.value);
 
