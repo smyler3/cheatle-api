@@ -5,7 +5,12 @@ export type Tile = {
     value: TileValue,
 }
 
-export type Word = {
+export interface Word {
     text: string,
     value: number,
+}
+
+export interface Hint extends Word {
+    revealedText: string,
+    isGuessed: boolean,
 }

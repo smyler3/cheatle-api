@@ -1,21 +1,20 @@
 import { PrefixTree } from "./PrefixTree";
 import { VALID_WORD_DICTIONARY } from "../data/dictionary";
 import { DICE, NUMBER_OF_DICE, REQUIRED_TOP_WORDS } from "../constants";
-import { Tile, Word } from "../types/types";
-
+import { Hint, Tile, Word } from "../types/types";
 
 export class Game {
     board: Tile[];
     private tree: PrefixTree;
     validWords: Word[];
-    highestScoringWords: Word[];
+    topWords: Map<number, Hint[]>;
 
     constructor() {
         this.board = this.createRandomBoard();
         this.tree = new PrefixTree();
         VALID_WORD_DICTIONARY.forEach(word => this.tree.insertString(word));
         this.validWords = this.tree.findValidWords(this.board);
-        this.highestScoringWords = this.findBestWords();
+        this.topWords = this.findTopWords();
     }
 
     private createRandomBoard(): Tile[] {
@@ -32,7 +31,7 @@ export class Game {
     };
 
     // TODO: write own quickSelect and compare to heap as potentially much better
-    private findBestWords(): Word[] {
+    private findTopWords(): Map<number, Hint[]> {
         function quickSelectByIndex(words: Word[], k: number): number {
             let left = 0
             let right = words.length - 1;
@@ -72,14 +71,22 @@ export class Game {
         const fifthLargestScore = quickSelectByIndex(this.validWords, REQUIRED_TOP_WORDS - 1);
         const highestScoringWords = this.validWords.filter((word) => word.value >= fifthLargestScore);
         const sortedHighestScoringWords = highestScoringWords.sort((a, b) => b.value - a.value);
+        const topWordsByValue = new Map<number, Hint[]>();
 
-        return sortedHighestScoringWords;
+        for (let i = 0; i < sortedHighestScoringWords.length; i++) {
+            const word = { ...sortedHighestScoringWords[i], revealedText: "", isGuessed: false };
+
+            const existing = topWordsByValue.get(word.value) ?? [];
+            topWordsByValue.set(word.value, [...existing, word]);
+        };
+
+        return topWordsByValue;
     };
 
     createNewGame() {
         this.board = this.createRandomBoard();
         this.validWords = this.tree.findValidWords(this.board);
-        this.highestScoringWords = this.findBestWords();
+        this.topWords = this.findTopWords();
     };
 
     getBoard() {
@@ -90,8 +97,8 @@ export class Game {
         return this.validWords;
     };
 
-    getHighestScoringWords() {
-        return this.highestScoringWords;
+    getTopWords() {
+        return this.topWords;
     };
 };
 
@@ -99,4 +106,4 @@ const chealte = new Game();
 
 console.log(chealte.validWords);
 console.log("---------------------------------");
-console.log(chealte.highestScoringWords);
+console.log(chealte.getTopWords());

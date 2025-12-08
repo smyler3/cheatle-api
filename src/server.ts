@@ -49,12 +49,12 @@ app.get('/cheatle-api', (req: Request, res: Response) => {
     const resObject = {
         "board": cheatle.getBoard(),
         "validWords": cheatle.getValidWords(),
-        "highestScoringWords": cheatle.getHighestScoringWords(),
+        "topWords": cheatle.getTopWords(),
     };
     res.json({
         "board": cheatle.getBoard(),
         "validWords": cheatle.getValidWords(),
-        "highestScoringWords": cheatle.getHighestScoringWords(),
+        "topWords": Object.fromEntries(cheatle.getTopWords()),
     });
 });
 
