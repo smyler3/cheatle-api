@@ -18,14 +18,18 @@ export class Game {
     }
 
     private createRandomBoard(): Tile[] {
-        // TODO: Add dice rolling logic
         const rolledDice = DICE;
-        const board = [];
-    
-        // TODO: Add dice rolling logic
-        for (let i = 0; i < NUMBER_OF_DICE; i += 1) {
-            board[i] = rolledDice[i][0]
+
+        for (let i = 0; i < rolledDice.length; i += 1) {
+            const maxIndex = rolledDice.length - 1 - i;
+            const randomIndex = Math.floor(Math.random() * maxIndex);
+
+            [rolledDice[randomIndex], rolledDice[maxIndex]] = [rolledDice[maxIndex], rolledDice[randomIndex]];
         };
+
+        const board = rolledDice.map((die) => {
+            return die[Math.floor(Math.random() * 6)]
+        });
     
         return board;
     };
@@ -102,8 +106,8 @@ export class Game {
     };
 };
 
-const chealte = new Game();
+const cheatle = new Game();
 
-console.log(chealte.validWords);
+console.log(cheatle.validWords);
 console.log("---------------------------------");
-console.log(chealte.getTopWords());
+console.log(cheatle.getTopWords());

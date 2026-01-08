@@ -1,8 +1,10 @@
 Make api calls secure, only allow calling from chiddle frontend, request expires every day at midnight?
 Add secrets/env file?
 
+Switch dictionary to this one https://github.com/redbo/scrabble/blob/master/dictionary.txt
+then implement python scripts to be run?
+
 Clean trie/game:
--- Add dice rolling logic
 -- Trial a heap implementation too with timing to compare across multiple boards
 
 use child processes to run python scripts too?
