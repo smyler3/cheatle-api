@@ -1,5 +1,6 @@
 // Dice
 export const NUMBER_OF_DICE: number = 16;
+export const SIDES_PER_DICE: number = 6;
 
 export const REQUIRED_TOP_WORDS: number = 5;
 

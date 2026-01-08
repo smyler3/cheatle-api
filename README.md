@@ -1,1 +1,3 @@
 # cheatle-api
+
+Dictionary: https://github.com/redbo/scrabble/blob/master/dictionary.txt

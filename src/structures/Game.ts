@@ -1,34 +1,34 @@
 import { PrefixTree } from "./PrefixTree";
-import { VALID_WORD_DICTIONARY } from "../data/dictionary";
-import { DICE, NUMBER_OF_DICE, REQUIRED_TOP_WORDS } from "../constants";
+import { VALID_WORD_DICTIONARY } from "../data/dictionaryNew";
+import { DICE, NUMBER_OF_DICE, REQUIRED_TOP_WORDS, SIDES_PER_DICE } from "../constants";
 import { Hint, Tile, Word } from "../types/types";
 
 export class Game {
-    board: Tile[];
     private tree: PrefixTree;
-    validWords: Word[];
-    topWords: Map<number, Hint[]>;
+    board!: Tile[];
+    validWords!: Word[];
+    topWords!: Map<number, Hint[]>;
 
     constructor() {
-        this.board = this.createRandomBoard();
+        // Populate prefix tree
         this.tree = new PrefixTree();
         VALID_WORD_DICTIONARY.forEach(word => this.tree.insertString(word));
-        this.validWords = this.tree.findValidWords(this.board);
-        this.topWords = this.findTopWords();
+
+        this.createNewGame();
     }
 
     private createRandomBoard(): Tile[] {
         const rolledDice = DICE;
 
-        for (let i = 0; i < rolledDice.length; i += 1) {
-            const maxIndex = rolledDice.length - 1 - i;
+        for (let i = 0; i < NUMBER_OF_DICE; i += 1) {
+            const maxIndex = NUMBER_OF_DICE - 1 - i;
             const randomIndex = Math.floor(Math.random() * maxIndex);
 
             [rolledDice[randomIndex], rolledDice[maxIndex]] = [rolledDice[maxIndex], rolledDice[randomIndex]];
         };
 
         const board = rolledDice.map((die) => {
-            return die[Math.floor(Math.random() * 6)]
+            return die[Math.floor(Math.random() * SIDES_PER_DICE)]
         });
     
         return board;
@@ -91,6 +91,10 @@ export class Game {
         this.board = this.createRandomBoard();
         this.validWords = this.tree.findValidWords(this.board);
         this.topWords = this.findTopWords();
+
+        console.log(this.validWords);
+        console.log("---------------------------------");
+        console.log(this.topWords);
     };
 
     getBoard() {
@@ -105,9 +109,3 @@ export class Game {
         return this.topWords;
     };
 };
-
-const cheatle = new Game();
-
-console.log(cheatle.validWords);
-console.log("---------------------------------");
-console.log(cheatle.getTopWords());
