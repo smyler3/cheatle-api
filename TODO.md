@@ -1,8 +1,7 @@
-Make api calls secure, only allow calling from chiddle frontend, request expires every day at midnight?
-Add secrets/env file?
+Make api calls secure, only allow calling from chiddle frontend
+-- Add secrets/env file?
 
-Try using a different word list: https://github.com/benhoyt/boggle/blob/master/word-list.txt
--- Add filtering for non-english spelling words
+Add filtering for non-english spelling words
 
 Find a good way to store the large txt files in the repo
 -- git large file storage??
