@@ -1,5 +1,5 @@
 import { PrefixTree } from "./PrefixTree";
-import { VALID_WORD_DICTIONARY } from "../data/dictionaryNew";
+import { VALID_WORD_DICTIONARY } from "../data/dictionary";
 import { DICE, NUMBER_OF_DICE, REQUIRED_TOP_WORDS, SIDES_PER_DICE } from "../constants";
 import { Hint, Tile, Word } from "../types/types";
 
