@@ -44,3 +44,6 @@ coverage/
 *.tgz
 .npm/
 .eslintcache
+
+droplet.md
+src/data/dictionary.ts
