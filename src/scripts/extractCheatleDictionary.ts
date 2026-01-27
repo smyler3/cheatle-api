@@ -1,11 +1,17 @@
-import fs from "fs";
-import readline from "readline";
+import * as fs from "fs";
+import * as readline from "readline";
+import * as path from "path";
 
 // Args
-const [inputFilePath, outputFilePath] = process.argv.slice(2);
+const [inputFilePath] = process.argv.slice(2);
 
-if (!inputFilePath || !outputFilePath) {
-  throw new Error("Usage: ts-node script.ts <input.csv> <output.ts>");
+if (fs.existsSync(inputFilePath)) {
+  console.log(`${inputFilePath} already exists, skipping...`);
+  process.exit(0);
+}
+
+if (!inputFilePath) {
+  throw new Error(`Couldn't find input file path (Usage: node extractCheatleDictionary.ts <path to input file>)`);
 }
 
 // Read words line by line
@@ -35,19 +41,24 @@ async function readWords(filePath: string): Promise<string[]> {
 }
 
 // Write as TS file
-async function writeTs(words: string[], outputFilePath: string) {
+async function writeTs(words: string[]) {
+  // Ensure output directory exists
+  const outDir = path.join("src", "data");
+  const outFile = path.join(outDir, "dictionary.ts");
+  fs.mkdirSync(outDir, { recursive: true });
+
   const content =
     "export const VALID_WORD_DICTIONARY: string[] = [\n" +
     words.map((w) => `  "${w}"`).join(",\n") +
     "\n];";
 
-  fs.writeFileSync(outputFilePath, content, "utf8");
+  fs.writeFileSync(outFile, content, "utf8");
 }
 
 async function main() {
   const words = await readWords(inputFilePath);
-  await writeTs(words, outputFilePath);
-  console.log(`Saved ${words.length} words to ${outputFilePath}`);
+  await writeTs(words);
+  console.log(`Saved ${words.length}`);
 }
 
 main().catch(console.error);

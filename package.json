@@ -4,12 +4,11 @@
   "description": "",
   "main": "server.ts",
   "scripts": {
-    "prepare": "npx ts-node src/scripts/extractCheatleDictionary.ts static/dictionary.txt src/data/dictionary.ts",
-    "build": "npm run prepare && tsc",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "test:game": "npx ts-node --project tsconfig.json -r tsconfig-paths/register src/structures/Game.ts",
-    "dev": "npx ts-node-dev src/server.ts",
-    "start": "npx ts-node src/server.ts"
+    "prepare:dictionary": "ts-node src/scripts/extractCheatleDictionary.ts static/dictionary.txt",
+    "build": "tsc",
+    "setup": "npm run prepare:dictionary && npm run build",
+    "start": "cross-env NODE_ENV=production node dist/server.js",
+    "dev": "cross-env NODE_ENV=development ts-node-dev src/server.ts"
   },
   "author": "smyler3",
   "license": "ISC",
@@ -24,6 +23,7 @@
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.5",
     "@types/node": "^24.9.1",
+    "cross-env": "^10.1.0",
     "typescript": "^5.9.3"
   }
 }

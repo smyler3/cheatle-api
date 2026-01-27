@@ -5,7 +5,8 @@ import path from 'path';
 import cron from "node-cron";
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT;
+const isDev = process.env.NODE_ENV === "development";
 
 /*
  * --------------------------------------------------
@@ -32,7 +33,7 @@ cron.schedule(dailyTaskString, () => {
 app.use(express.static(path.join(__dirname, "./static")));
 
 const corsOptions = {
-    origin: ['http://localhost:5173/', 'http://localhost:5173'],
+    origin: isDev ? 'http://localhost:5173/' : process.env.FRONTEND_URL,
     methods: ['GET'],
     allowedHeaders: ['application/json'],
 };
