@@ -17,7 +17,7 @@ export const TILES: Record<string, Tile> = {
     "N": { text: "N", value: 1 },
     "O": { text: "O", value: 1 },
     "P": { text: "P", value: 4 },
-    "Q": { text: "Qu", value: 5 },
+    "Q": { text: "QU", value: 5 },
     "R": { text: "R", value: 2 },
     "S": { text: "S", value: 1 },
     "T": { text: "T", value: 1 },

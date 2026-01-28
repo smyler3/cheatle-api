@@ -10,7 +10,7 @@ export class Game {
     topWords!: Map<number, Hint[]>;
 
     constructor() {
-        // Populate prefix tree
+        // Populate prefix tree with dictionary words
         this.tree = new PrefixTree();
         VALID_WORD_DICTIONARY.forEach(word => this.tree.insertString(word));
 

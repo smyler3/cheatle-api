@@ -19,23 +19,26 @@ export class PrefixTree {
     };
 
     insertString(newString: string): void {
-        const newStringLength = newString.includes("Q") ? newString.length - 1 : newString.length;
         let parent = this.root;
 
-        for (let i = 0; i < newStringLength; i += 1) {
-            const childrenIndex = newString[i].charCodeAt(0) - 'A'.charCodeAt(0);
+        for (let i = 0; i < newString.length; i += 1) {
+            const childrenIndex = this.getCharacterIndex(newString[i])
 
             if (parent.children[childrenIndex] === null) {
                 parent.children[childrenIndex] = new PrefixTreeNode();
             }
 
             parent = parent.children[childrenIndex];
+
+            // Q only appears in the "QU" tile so we just assume the U is present 
+            if (newString[i] === 'Q'){ i += 1 };
         };
 
         parent.isTerminal = true;
     };
 
     private getCharacterIndex(character: string): number {
+         // Letters are derived from their index (A=0, B=1, C=2, ... Z=25)
         return character.charCodeAt(0) - 'A'.charCodeAt(0);
     };
 
@@ -55,8 +58,13 @@ export class PrefixTree {
 
         if (!nextNode) return;
 
-        // Add text and value to running word
-        const newWord = { text: runningWord.text + text, value: runningWord.value + value };
+        // Q only appears in the "QU" tile so we just assume the U is present 
+        const newText = text === "Q" ? "QU" : text;
+
+        const newWord = { 
+            text: runningWord.text + newText,
+            value: runningWord.value + value 
+        };
 
         if (nextNode.isTerminal) {
             wordsList.set(newWord.text, newWord.value);
@@ -76,6 +84,7 @@ export class PrefixTree {
             const char = board[i];
             const charIndex = this.getCharacterIndex(char.text);
             const childNode = this.root.children[charIndex];
+
             if (childNode) {
                 const runningWord = { text: "", value: 0 };
                 const visited = new Array(NUMBER_OF_DICE).fill(false);
