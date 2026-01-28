@@ -3,10 +3,12 @@ import { Game } from './structures/Game';
 import cors from 'cors';
 import path from 'path';
 import cron from "node-cron";
+require('dotenv').config();
 
 const app = express();
 const port = process.env.PORT;
 const isDev = process.env.NODE_ENV === "development";
+console.log("env", process.env);
 
 /*
  * --------------------------------------------------
@@ -33,7 +35,7 @@ cron.schedule(dailyTaskString, () => {
 app.use(express.static(path.join(__dirname, "./static")));
 
 const corsOptions = {
-    origin: isDev ? 'http://localhost:5173/' : process.env.FRONTEND_URL,
+    origin: isDev ? 'http://localhost:5173' : process.env.FRONTEND_URL,
     methods: ['GET'],
     allowedHeaders: ['application/json'],
 };
@@ -47,11 +49,6 @@ app.use(cors(corsOptions));
  */ 
 
 app.get('/cheatle-api', (req: Request, res: Response) => {
-    const resObject = {
-        "board": cheatle.getBoard(),
-        "validWords": cheatle.getValidWords(),
-        "topWords": cheatle.getTopWords(),
-    };
     res.json({
         "board": cheatle.getBoard(),
         "validWords": cheatle.getValidWords(),

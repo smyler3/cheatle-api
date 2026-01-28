@@ -1,7 +1,5 @@
-Make api calls secure, only allow calling from chiddle frontend
--- Add secrets/env file?
-
 Add filtering for non-english spelling words
+Add plurals to the dictionary
 
 Find a good way to store the large txt files in the repo
 -- git large file storage??
