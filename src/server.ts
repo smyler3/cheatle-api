@@ -8,7 +8,6 @@ require('dotenv').config();
 const app = express();
 const port = process.env.PORT;
 const isDev = process.env.NODE_ENV === "development";
-console.log("env", process.env);
 
 /*
  * --------------------------------------------------

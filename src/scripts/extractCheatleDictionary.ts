@@ -5,11 +5,6 @@ import * as path from "path";
 // Args
 const [inputFilePath] = process.argv.slice(2);
 
-if (fs.existsSync(inputFilePath)) {
-  console.log(`${inputFilePath} already exists, skipping...`);
-  process.exit(0);
-}
-
 if (!inputFilePath) {
   throw new Error(`Couldn't find input file path (Usage: node extractCheatleDictionary.ts <path to input file>)`);
 }
