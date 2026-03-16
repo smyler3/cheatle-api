@@ -1,5 +1,6 @@
 import express, { Request, Response } from 'express';
 import { Game } from './structures/Game';
+import { statsMiddleware, flushDailyStats } from './scripts/statsCounter';
 import cors from 'cors';
 import path from 'path';
 import cron from "node-cron";
@@ -21,8 +22,21 @@ const dailyTaskString = '0 0 * * *';
 const taskOptions = { timezone: 'Australia/Melbourne' };
 
 cron.schedule(dailyTaskString, () => {
-  cheatle.createNewGame();
+    flushDailyStats()
+    cheatle.createNewGame();
 }, taskOptions);
+
+process.on('SIGINT', () => {
+    console.log('SIGINT → flushing stats');
+    flushDailyStats();
+    process.exit();
+});
+
+process.on('SIGTERM', () => {
+    console.log('SIGTERM → flushing stats');
+    flushDailyStats();
+    process.exit();
+});
 
 /*
  * --------------------------------------------------
@@ -35,11 +49,13 @@ app.use(express.static(path.join(__dirname, "./static")));
 
 const corsOptions = {
     origin: isDev ? 'http://localhost:5173' : process.env.FRONTEND_URL,
-    methods: ['GET'],
-    allowedHeaders: ['application/json'],
+    methods: ['GET', 'POST'],
+    allowedHeaders: ['Content-Type'],
 };
 
 app.use(cors(corsOptions));
+
+app.use('/cheatle-api', statsMiddleware);
 
 /*
  * --------------------------------------------------
@@ -53,6 +69,10 @@ app.get('/cheatle-api', (req: Request, res: Response) => {
         "validWords": cheatle.getValidWords(),
         "topWords": Object.fromEntries(cheatle.getTopWords()),
     });
+});
+
+app.post('/cheatle-api', (req: Request, res: Response) => {
+    res.status(204).end();
 });
 
 app.listen(port, () => {

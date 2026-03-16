@@ -92,9 +92,11 @@ export class Game {
         this.validWords = this.tree.findValidWords(this.board);
         this.topWords = this.findTopWords();
 
-        console.log(this.validWords);
-        console.log("---------------------------------");
-        console.log(this.topWords);
+        if (process.env.NODE_ENV === "development") {
+            console.log(this.validWords);
+            console.log("---------------------------------");
+            console.log(this.topWords);
+        }
     };
 
     getBoard() {
