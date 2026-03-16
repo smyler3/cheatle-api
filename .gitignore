@@ -47,3 +47,4 @@ coverage/
 
 droplet.md
 src/data/dictionary.ts
+/stats/
