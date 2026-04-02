@@ -14,3 +14,8 @@ export interface Hint extends Word {
     revealedText: string,
     isGuessed: boolean,
 }
+
+export type StatEntry = {
+    gets: number;
+    pushes: number;
+};

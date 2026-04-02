@@ -29,13 +29,11 @@ cron.schedule(dailyTaskString, () => {
 process.on('SIGINT', () => {
     console.log('SIGINT → flushing stats');
     flushDailyStats();
-    process.exit();
 });
 
 process.on('SIGTERM', () => {
     console.log('SIGTERM → flushing stats');
     flushDailyStats();
-    process.exit();
 });
 
 /*
